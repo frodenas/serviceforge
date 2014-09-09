@@ -1,0 +1,69 @@
+<div class='container'>
+  <div class='row'>
+    <div class='panel panel-default'>
+      <div class='panel-heading'>
+        <h5 class='panel-title'>
+          <span class='glyphicon glyphicon-zoom-in'></span> Details
+            <div class='btn-group pull-right'>
+              <% if policy(@service_plan).update? %>
+                <button type='button' class='btn btn-default'>
+                  <%= link_to edit_service_plan_url(@service, @service_plan) do %>
+                    <span class='glyphicon glyphicon-pencil'></span>
+                  <% end %>
+                </button>
+              <% end %>
+              <% if policy(@service_plan).destroy? %>
+                <button type='button' class='btn btn-default'>
+                  <%= link_to service_plan_url(@service, @service_plan), method: 'delete', data: { confirm: "Are you sure you want to delete Service Plan \"#{@service_plan.name}\"?" } do %>
+                    <span class='glyphicon glyphicon-trash'></span>
+                  <% end %>
+                </button>
+              <% end %>
+            </div>
+          </h5>
+          <div class='clearfix'></div>
+        </div>
+
+        <table class='table table-bordered table-condensed table-striped table-hover'>
+          <tbody>
+          <tr>
+            <td class='col-sm-2'><strong>Name</strong></td>
+            <td class='col-sm-10'><%= @service_plan.name %></td>
+          </tr>
+          <tr>
+            <td class='col-sm-2'><strong>Description</strong></td>
+            <td class='col-sm-10'><%= @service_plan.description %></td>
+          </tr>
+          <tr>
+            <td class='col-sm-2'><strong>Public</strong></td>
+            <td class='col-sm-10'><%= boolean_image(@service_plan.public) %></td>
+          </tr>
+          <tr>
+            <td class='col-sm-2'><strong>Bullets</strong></td>
+            <td class='col-sm-10'><%= @service_plan.bullets %></td>
+          </tr>
+          <tr>
+            <td class='col-sm-2'><strong>Free</strong></td>
+            <td class='col-sm-10'><%= boolean_image(@service_plan.free) %></td>
+          </tr>
+          <tr>
+            <td class='col-sm-2'><strong>Display Name</strong></td>
+            <td class='col-sm-10'><%= @service_plan.display_name %></td>
+          </tr>
+          <tr>
+            <td class='col-sm-2'><strong>Created by</strong></td>
+            <td class='col-sm-10'><%= @service_plan.creator.first_name %> <%= @service_plan.creator.last_name %></td>
+          </tr>
+          <tr>
+            <td class='col-sm-2'><strong>Created at</strong></td>
+            <td class='col-sm-10'><%= @service_plan.created_at %></td>
+          </tr>
+          <tr>
+            <td class='col-sm-2'><strong>Last update</strong></td>
+            <td class='col-sm-10'><%= @service_plan.updated_at %></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<% @users.each do |user| %>
+  <li role='presentation'>
+    <small>
+      <%= gravatar_image_tag(user.email, class: 'pull-left', alt: "#{user.first_name} #{user.last_name}", gravatar: { size: 15 }) %>
+      &nbsp;<%= user.first_name %> <%= user.last_name %>
+      <%= form_for(:memberships, url: team_memberships_url(@team), html: { role: 'form', class: 'text-right' }) do |f| %>
+        <input type='hidden' id='user_id' name='id' value='<%= user.id %>'>
+        <button type='submit' class='btn btn-default btn-xs pull-right'>
+          <span class='glyphicon glyphicon-plus'></span>
+        </button>
+      <% end %>
+    </small>
+  </li>
+<% end %>

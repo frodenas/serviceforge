@@ -1,0 +1,57 @@
+<div class='container'>
+  <div class='row'>
+    <div class='panel panel-default'>
+      <div class='panel-heading'>
+        <h5 class='panel-title'>
+          <span class='glyphicon glyphicon-user'></span>
+          Users
+        </h5>
+        <div class='clearfix'></div>
+      </div>
+
+      <table class='table table-condensed table-striped table-hover'>
+        <thead>
+          <tr>
+            <th class='col-sm-4'>Name</th>
+            <th class='col-sm-3'>Email</th>
+            <th class='col-sm-1 text-center'>Public</th>
+            <th class='col-sm-1'>Role</th>
+            <th class='col-sm-2'>Last Login</th>
+            <th class='col-sm-1'></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td>
+                <%= gravatar_image_tag(user.email, class: 'pull-left', alt: "#{user.first_name} #{user.last_name}") %>
+                &nbsp;<%= user.first_name %> <%= user.last_name %>
+              </td>
+              <td><%= user.email %></td>
+              <td class='text-center'><%= boolean_image(user.public) %></td>
+              <td><%= role_text(user) %></td>
+              <td><%= user.last_sign_in_at %></td>
+              <td class='text-right'>
+                <% if policy(user).update? %>
+                  <button type='button' class='btn btn-default'>
+                    <%= link_to edit_user_url(user) do %>
+                      <span class='glyphicon glyphicon-pencil'></span>
+                    <% end %>
+                  </button>
+                <% end %>
+                <% if policy(user).destroy? %>
+                  <button type='button' class='btn btn-default'>
+                    <%= link_to user_url(user), method: 'delete', data: { confirm: "Are you sure you want to remove \"#{user.first_name} #{user.last_name}\" ?" } do %>
+                      <span class='glyphicon glyphicon-trash'></span>
+                    <% end %>
+                  </button>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

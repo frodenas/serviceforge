@@ -1,0 +1,59 @@
+<div class='well'>
+  <%= form_for(@team, html: { role: 'form', class: 'form-horizontal' }) do |f| %>
+    <% if @team.errors.any? %>
+      <div id='error_explanation'>
+        <h3><%= pluralize(@team.errors.count, 'error') %> prohibited this team from being saved:</h3>
+        <ul>
+        <% @team.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class='form-group'>
+      <%= f.label :name, class: 'control-label col-sm-2' %>
+      <div class='col-sm-10'>
+        <%= f.text_field :name, autofocus: true, class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class='form-group'>
+      <%= f.label :description, class: 'control-label col-sm-2' %>
+      <div class='col-sm-10'>
+        <%= f.text_field :description, class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class='form-group'>
+      <%= f.label :access_level, class: 'control-label col-sm-2' %>
+      <div class='col-sm-10'>
+        <div class='radio'>
+          <label>
+            <%= f.radio_button :access_level, Team.access_levels[:read] %>
+            <strong>Read</strong>: this team will be able to read associated resources
+          </label>
+        </div>
+        <div class='radio'>
+          <label>
+            <%= f.radio_button :access_level, Team.access_levels[:write] %>
+            <strong>Write</strong>: this team will be able to read and write associated resources
+          </label>
+        </div>
+        <div class='radio'>
+          <label>
+            <%= f.radio_button :access_level, Team.access_levels[:admin] %>
+            <strong>Admin</strong>: this team will be able to read and write associated resources,
+            as well as administer the team
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class='form-group'>
+      <div class='col-sm-offset-2 col-sm-2'>
+        <%= f.submit class: 'btn btn-primary btn-lg btn-block' %>
+      </div>
+    </div>
+  <% end %>
+</div>

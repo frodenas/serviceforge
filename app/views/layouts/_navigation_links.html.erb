@@ -1,0 +1,9 @@
+<li><%= link_to 'Services', services_url %></li>
+<% if user_signed_in? %>
+  <% if admin? %>
+    <li><%= link_to 'Teams', teams_url %></li>
+  <% end %>
+  <% if policy(User).index? %>
+    <li><%= link_to 'Users', users_url %></li>
+  <% end %>
+<% end %>

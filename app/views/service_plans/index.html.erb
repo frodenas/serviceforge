@@ -1,0 +1,58 @@
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-8'>
+      <div class='panel panel-default'>
+        <div class='panel-heading'>
+          <h5 class='panel-title'>
+            <span class='glyphicon glyphicon glyphicon-credit-card'></span>
+            Service Plans
+            <% if policy(ServicePlan).new? %>
+              <button type='button' class='btn btn-default pull-right'>
+                <%= link_to new_service_plan_url(@service) do %>
+                  <span class='glyphicon glyphicon-plus'></span>
+                <% end %>
+              </button>
+            <% end %>
+          </h5>
+          <div class='clearfix'></div>
+        </div>
+
+        <table class='table table-condensed table-striped table-hover'>
+          <thead>
+          <tr>
+            <th class='col-sm-4'>Name</th>
+            <th class='col-sm-6'>Description</th>
+            <th class='col-sm-2'></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @service_plans.each do |plan| %>
+            <tr>
+              <td>
+                 <a href="<%= service_plan_url(@service, plan) %>"><%= plan.display_name.blank? ? plan.name : plan.display_name %></a>
+              </td>
+              <td><%= plan.description %></td>
+              <td class='text-right'>
+                <% if policy(plan).update? %>
+                    <button type='button' class='btn btn-default'>
+                      <%= link_to edit_service_plan_url(@service, plan) do %>
+                          <span class='glyphicon glyphicon-pencil'></span>
+                      <% end %>
+                    </button>
+                <% end %>
+                <% if policy(plan).destroy? %>
+                  <button type='button' class='btn btn-default'>
+                    <%= link_to service_plan_url(@service, plan), method: 'delete', data: { confirm: "Are you sure you want to remove Service Plan \"#{plan.name}\" ?" } do %>
+                      <span class='glyphicon glyphicon-trash'></span>
+                    <% end %>
+                  </button>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

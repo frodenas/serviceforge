@@ -1,0 +1,179 @@
+<div class='well'>
+  <%= form_for(@service, html: { role: 'form', class: 'form-horizontal', multipart: true }) do |f| %>
+    <% if @service.errors.any? %>
+      <div id='error_explanation'>
+        <h3><%= pluralize(@service.errors.count, 'error') %> prohibited this service from being saved:</h3>
+        <ul>
+          <% @service.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class='form-group required'>
+      <%= f.label :name, class: 'control-label col-sm-2' %>
+      <div class='col-sm-10'>
+        <%= f.text_field :name, autofocus: true, class: 'form-control' %>
+        <span class='help-block'>The friendly name of the service that will appear in the catalog. Lowercase letters and numbers, no spaces.</span>
+      </div>
+    </div>
+
+    <div class='form-group'>
+      <%= f.label :description, class: 'control-label col-sm-2' %>
+      <div class='col-sm-10'>
+        <%= f.text_field :description, class: 'form-control' %>
+        <span class='help-block'>A short description of the service that will appear in the catalog.</span>
+      </div>
+    </div>
+
+    <div class='form-group'>
+      <%= f.label :bindable, class: 'control-label col-sm-2' %>
+      <div class='col-sm-10'>
+        <div class='checkbox'>
+          <label>
+            <%= f.check_box :bindable %>
+            Whether the service can be bound to applications.
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class='form-group'>
+      <%= f.label :license, class: 'control-label col-sm-2' %>
+      <div class='col-sm-10'>
+        <div class='radio'>
+          <label>
+            <%= f.radio_button :license, Service.licenses[:free] %>
+            <strong>Free</strong>: this service is provided free of charge.
+          </label>
+        </div>
+        <div class='radio'>
+          <label>
+            <%= f.radio_button :license, Service.licenses[:commercial] %>
+            <strong>Commercial</strong>: this service is provided under a commercial license.
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class='form-group'>
+      <%= f.label :public, class: 'control-label col-sm-2' %>
+      <div class='col-sm-10'>
+        <div class='checkbox'>
+          <label>
+            <%= f.check_box :public %>
+            Uncheck if you do not want this service to appear on searches.
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class='text-center'>
+      <a data-toggle='collapse' data-parent='#accordion' href='#collapse_service_advanced'>Advanced Options</a>
+    </div>
+
+    <div id='collapse_service_advanced' class='collapse'>
+      <div class='form-group'>
+        <label class='control-label col-sm-2' for='service_tags'>
+          Tags<br /><small>(optional)</small>
+        </label>
+        <div class='col-sm-10'>
+          <%= f.text_field :tags, class: 'form-control' %>
+          <span class='help-block'>Comma separated list of tags. Eg. mysql, relational, redis, key-value, caching, messaging, amqp. Tags provides a flexible mechanism to expose a classification, attribute, or base technology of a service, enabling equivalent services to be swapped out without changes to dependent logic in applications, buildpacks, or other services.</span>
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <label class='control-label col-sm-2' for='service_requires'>
+          Requires<br /><small>(optional)</small>
+        </label>
+        <div class='col-sm-10'>
+          <div class='checkbox'>
+            <label>
+              <%= f.check_box :requires_syslog_drain %>
+              &nbsp;syslog_drain (permission required for logs to be automatically wired to applications)
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <label class='control-label col-sm-2' for='service_display_name'>
+          Display name<br /><small>(optional)</small>
+        </label>
+        <div class='col-sm-10'>
+          <%= f.text_field :display_name, class: 'form-control' %>
+          <span class='help-block'>The name of the service to be displayed in graphical clients.</span>
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <label class='control-label col-sm-2' for='service_image'>
+          Image<br /><small>(optional)</small>
+        </label>
+        <div class='col-sm-10'>
+          <%= image_tag @service.image.url(:thumbnail) %>
+          <%= f.file_field :image, class: 'form-control' %>
+          <span class='help-block'>The image for the service. Supported formats are: 'jpeg', 'gif' and 'png'. Maximum size 1 Mb. It will be converted automatically to a 64x64 thumbnail image.</span>
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <label class='control-label col-sm-2' for='service_long_description'>
+          Long description<br /><small>(optional)</small>
+        </label>
+        <div class='col-sm-10'>
+          <%= f.text_area :long_description, class: 'form-control' %>
+          <span class='help-block'>A long description of the service that will appear in the catalog.</span>
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <label class='control-label col-sm-2' for='service_provider'>
+          Provider<br /><small>(optional)</small>
+        </label>
+        <div class='col-sm-10'>
+          <%= f.text_field :provider, class: 'form-control' %>
+          <span class='help-block'>The name of the upstream entity providing the actual service.</span>
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <label class='control-label col-sm-2' for='service_documentation_url'>
+          Documentation URL<br /><small>(optional)</small>
+        </label>
+        <div class='col-sm-10'>
+          <%= f.url_field :documentation_url, class: 'form-control' %>
+          <span class='help-block'>Link to a documentation page for the service.</span>
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <label class='control-label col-sm-2' for='service_support_url'>
+          Support URL<br /><small>(optional)</small>
+        </label>
+        <div class='col-sm-10'>
+          <%= f.url_field :support_url, class: 'form-control' %>
+          <span class='help-block'>Link to a support page for the the service.</span>
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <label class='control-label col-sm-2' for='service_source_url'>
+          Source URL<br /><small>(optional)</small>
+        </label>
+        <div class='col-sm-10'>
+          <%= f.url_field :source_url, class: 'form-control' %>
+          <span class='help-block'>Link to a source page for the the service.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class='form-group'>
+      <div class='col-sm-offset-2 col-sm-2'>
+        <%= f.submit class: 'btn btn-primary btn-lg btn-block' %>
+      </div>
+    </div>
+  <% end %>
+</div>

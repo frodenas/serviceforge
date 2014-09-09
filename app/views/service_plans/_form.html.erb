@@ -1,0 +1,89 @@
+<div class='well'>
+  <% url = (action_name == 'edit') ? service_plan_url(@service, @service_plan) : service_plans_url(@service) %>
+  <%= form_for(@service_plan, url: url, html: { role: 'form', class: 'form-horizontal' }) do |f| %>
+    <% if @service_plan.errors.any? %>
+      <div id='error_explanation'>
+        <h3><%= pluralize(@service_plan.errors.count, 'error') %> prohibited this service from being saved:</h3>
+        <ul>
+          <% @service_plan.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class='form-group required'>
+      <%= f.label :name, class: 'control-label col-sm-2' %>
+      <div class='col-sm-10'>
+        <%= f.text_field :name, autofocus: true, class: 'form-control' %>
+        <span class='help-block'>The friendly name of the service plan that will appear in the catalog. Lowercase letters and numbers, no spaces.</span>
+      </div>
+    </div>
+
+    <div class='form-group'>
+      <%= f.label :description, class: 'control-label col-sm-2' %>
+      <div class='col-sm-10'>
+        <%= f.text_field :description, class: 'form-control' %>
+        <span class='help-block'>A short description of the service plan that will appear in the catalog.</span>
+      </div>
+    </div>
+
+    <div class='form-group'>
+      <%= f.label :public, class: 'control-label col-sm-2' %>
+      <div class='col-sm-10'>
+        <div class='checkbox'>
+          <label>
+            <%= f.check_box :public %>
+            Uncheck if you do not want this service plan to appear on searches.
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class='text-center'>
+      <a data-toggle='collapse' data-parent='#accordion' href='#collapse_service_plan_advanced'>Advanced Options</a>
+    </div>
+
+    <div id='collapse_service_plan_advanced' class='collapse'>
+      <div class='form-group'>
+        <label class='control-label col-sm-2' for='service_plan_bullets'>
+          Bullets<br /><small>(optional)</small>
+        </label>
+        <div class='col-sm-10'>
+          <%= f.text_field :bullets, class: 'form-control' %>
+          <span class='help-block'>Comma separated list of bullets. Features of this service plan, to be displayed in a bulleted-list.</span>
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <label class='control-label col-sm-2' for='service_plan_free'>
+          Free<br /><small>(optional)</small>
+        </label>
+        <div class='col-sm-10'>
+          <div class='checkbox'>
+            <label>
+              <%= f.check_box :free %>
+              Allow the service plan to be limited by the non_basic_services_allowed field in a Cloud Foundry Quota.
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <label class='control-label col-sm-2' for='service_plan_display_name'>
+          Display name<br /><small>(optional)</small>
+        </label>
+        <div class='col-sm-10'>
+          <%= f.text_field :display_name, class: 'form-control' %>
+          <span class='help-block'>The name of the service plan to be displayed in graphical clients.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class='form-group'>
+      <div class='col-sm-offset-2 col-sm-3'>
+        <%= f.submit class: 'btn btn-primary btn-lg btn-block' %>
+      </div>
+    </div>
+  <% end %>
+</div>

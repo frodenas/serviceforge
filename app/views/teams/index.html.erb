@@ -1,0 +1,56 @@
+<div class='container'>
+  <div class='row'>
+    <% @teams.each do |team| %>
+      <div class='col-md-4'>
+        <div class='panel panel-default'>
+          <div class='panel-heading' style='height:100px'>
+            <h5 class='panel-title'>
+              <a href="<%= team_url(team) %>"><%= team.name %></a>
+              <div class='btn-group pull-right'>
+                <% if policy(team).update? %>
+                  <button type='button' class='btn btn-default'>
+                    <%= link_to edit_team_url(team) do %>
+                      <span class='glyphicon glyphicon-pencil'></span>
+                    <% end %>
+                  </button>
+                <% end %>
+                <% if policy(team).destroy? %>
+                  <button type='button' class='btn btn-default'>
+                    <%= link_to team_url(team), method: 'delete', data: { confirm: "Are you sure you want to delete team \"#{team.name}\"?" } do %>
+                      <span class='glyphicon glyphicon-trash'></span>
+                    <% end %>
+                  </button>
+                <% end %>
+              </div>
+            </h5>
+            <p><%= team.description %></p>
+            <p><%= pluralize(team.memberships.count, 'member') %> &middot; <%= pluralize(team.grants.count, 'resource') %></p>
+          </div>
+          <div class='panel-body'>
+            <% team.users.take(10).each do |user| %>
+              <%= gravatar_image_tag(user.email, class: 'pull-left', alt: "#{user.first_name} #{user.last_name}") %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <% if policy(Team).new? %>
+      <div class='col-md-4'>
+        <div class='panel panel-default'>
+          <div class='panel-heading' style='height:100px'>
+            <h5 class='panel-title text-center'>
+              <button type='button' class='btn btn-default btn-lg'>
+                <%= link_to new_team_url do %>
+                  <span class='glyphicon glyphicon-plus'></span>
+                <% end %>
+              </button>
+            </h5>
+          </div>
+          <div class='panel-body text-center'>
+            <small>Add a new team</small>
+          </div>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>

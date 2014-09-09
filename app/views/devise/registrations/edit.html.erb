@@ -1,0 +1,95 @@
+<div class='container'>
+  <div class='row'>
+    <h3 class='text-center'>Edit Profile</h3>
+    <div class='col-md-offset-2 col-md-8 well'>
+      <%= form_for(resource, as: resource_name, url: registration_url(resource_name), html: { method: :put, role: 'form', class: 'form-horizontal' }) do |f| %>
+        <%= devise_error_messages! %>
+
+        <div class='form-group'>
+          <%= f.label :first_name, class: 'control-label col-sm-3' %>
+          <div class='col-sm-9'>
+            <%= f.text_field :first_name, autofocus: true, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class='form-group'>
+          <%= f.label :last_name, class: 'control-label col-sm-3' %>
+          <div class='col-sm-9'>
+            <%= f.text_field :last_name, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class='form-group'>
+          <%= f.label :email, class: 'control-label col-sm-3' %>
+          <div class='col-sm-9'>
+            <%= f.email_field :email, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class='form-group'>
+          <%= f.label :public, class: 'control-label col-sm-3' %>
+          <div class='col-sm-9'>
+            <div class='checkbox'>
+              <label>
+                <%= f.check_box :public %>
+                Uncheck if you do not want your user to appear on searches
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <fieldset>
+          <div class='col-sm-offset-3'>
+            <p class='text-center'>Leave these fields blank if you don't want to change your password:</p>
+          </div>
+          <div class='form-group'>
+            <%= f.label :password, class: 'control-label col-sm-3' %>
+            <div class='col-sm-9'>
+              <%= f.password_field :password, autocomplete: 'off', class: 'form-control' %>
+            </div>
+          </div>
+          <div class='form-group'>
+            <%= f.label :password_confirmation, class: 'control-label col-sm-3' %>
+            <div class='col-sm-9'>
+              <%= f.password_field :password_confirmation, class: 'form-control' %>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <div class='col-sm-offset-3'>
+            <p class='text-center'>You must enter your current password to make changes:</p>
+          </div>
+          <div class='form-group'>
+            <%= f.label :current_password, class: 'control-label col-sm-3' %>
+            <div class='col-sm-9'>
+              <%= f.password_field :current_password, class: 'form-control' %>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class='form-group'>
+          <div class='col-sm-offset-3 col-sm-3'>
+            <button class='btn btn-primary btn-lg btn-block' type='submit'>
+              Update
+            </button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class='container'>
+  <div class='row'>
+    <h3 class='text-center'>Cancel Account</h3>
+    <div class='col-md-offset-2 col-md-8 well'>
+      <div class='form-group'>
+        <p class='text-center'>Unhappy? We'll be sad to see you go</p>
+        <div class='col-sm-offset-4 col-sm-4'>
+           <%= button_to 'Cancel my account', registration_url(resource_name), data: { confirm: 'Are you sure you want to cancel your account?' }, method: :delete, class: 'btn btn-primary btn-lg btn-block' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
